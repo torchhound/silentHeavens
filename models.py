@@ -25,17 +25,17 @@ def removeEmpire(username):
 		print(e)
 		pass
 
-def insertUser(username, password):
+def insertUser(username, password, email):
 	conn = sqlite3.connect("users.db")
 	cur = conn.cursor()
-	cur.execute("INSERT INTO users (username, password) VALUES ({}, {})".format(username, password))
+	cur.execute("INSERT INTO users (username, password, email) VALUES ({}, {}, {})".format(username, password, email))
 	conn.commit()
 	conn.close()
 
 def retrieveUsers():
 	conn = sqlite3.connect("users.db")
 	cur = conn.cursor()
-	cur.execute("SELECT username, password FROM users")
+	cur.execute("SELECT username, password, email FROM users")
 	users = cur.fetchall()
 	conn.close()
 	return users

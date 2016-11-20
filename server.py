@@ -35,14 +35,12 @@ class loginForm(Form):
 		else:
 			return True
 			
-	'''
 		emailCheck = self.email.lower() 
-		if emailCheck in open(dbName, 'r').read(): #check if email has been used before
+		if emailCheck in users: #check if email has been used before
 			self.email.errors.append("That email is already taken")
 			return False
 		else:
 			return True	
-	'''
 	
 @app.route('/', methods=['POST', 'GET'])
 def login():
@@ -61,7 +59,8 @@ def login():
         elif form.register.data:   
         	username = form.username.data
         	password = bcrypt.generate_password_hash(form.password.data)
-        	models.insertUser(username, password)
+        	email = form.email.data
+        	models.insertUser(username, password, email)
     else:
         return render_template('login.html', form=form)
         

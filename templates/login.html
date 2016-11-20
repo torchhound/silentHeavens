@@ -7,6 +7,7 @@
 		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
     <body>
+    <div id="wrap">
     	{% with msgs = get_flashed_messages() %}
         {% if msgs %}
           {%- for msg in msgs %}
@@ -16,16 +17,17 @@
           {% endfor -%}
         {% endif %}
       {% endwith %}
-		{% block content %}
-  <h2>Login/Register</h2>
+      <div id="login">
+      <h1>Login</h1>
+      	{% block content %}
 
   {% for message in form.username.errors %}
     <div class="flash">{{ message }}</div>
   {% endfor %}
    
-  <!--{% for message in form.email.errors %}
+  {% for message in form.email.errors %}
     <div class="flash">{{ message }}</div>
-  {% endfor %}-->
+  {% endfor %}
    
   {% for message in form.password.errors %}
     <div class="flash">{{ message }}</div>
@@ -36,18 +38,51 @@
 	<br>
     {{ form.username.label }}
     {{ form.username }}
-    <br><!--
-    {{ form.email.label }}
-    {{ form.email }}-->
     <br> 
     {{ form.password.label }}
     {{ form.password }}
     <br> 
     {{ form.login }}
+	<br>
+  </form>
+     
+{% endblock %}
+      </div>
+      <div id="register">
+      <h1>Register</h1>
+      	{% block content %}
+
+  {% for message in form.username.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+   
+  {% for message in form.email.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+   
+  {% for message in form.password.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+   
+  <form method="POST">
+    {{ form.hidden_tag() }}
+	<br>
+    {{ form.username.label }}
+    {{ form.username }}
+    <br>
+    {{ form.email.label }}
+    {{ form.email }}
+    <br> 
+    {{ form.password.label }}
+    {{ form.password }}
+    <br> 
     {{ form.register }}
 	<br>
   </form>
      
 {% endblock %}
+      </div>
+		
+	</div>
 </body>
 </html>
