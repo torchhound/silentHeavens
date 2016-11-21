@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, redirect, url_for, flash
 from flask_wtf import Form 
 from wtforms import TextField, TextAreaField, SubmitField, validators, ValidationError, PasswordField
 from flask_bcrypt import Bcrypt
-from flask_login import LoginManager, UserMixin, login_required
+from flask_login import LoginManager, login_required, login_user, logout_user
 import models
 
 DEBUG = True #change in production
@@ -12,6 +12,10 @@ app.secret_key = "echidna"
 bcrypt = Bcrypt(app)
 loginManager = LoginManager()
 loginManager.init_app(app)
+
+@loginManager.user_loader
+def load_user(username):
+	return models.getId(username)
 
 class loginForm(Form):
 	username = TextField("Username",  [validators.Required("Please enter your username.")])
@@ -59,8 +63,9 @@ def login():
 		if loginForm.login.data:
 			username = loginForm.username.data
 			password = bcrypt.generate_password_hash(loginForm.password.data)
-			users = models.retrieveUsers()
-			if username in users and password in users:
+			user = models.User.authUser(username, password)
+			if user == True:
+				login_user(username) #not sure about that argument
 				return render_template('index.html')
 			else:
 				return render_template("login.html", registerForm=registerForm, loginForm=loginForm)
@@ -68,7 +73,11 @@ def login():
 			username = registerForm.username.data
 			password = bcrypt.generate_password_hash(registerForm.password.data)
 			email = registerForm.email.data
-			models.insertUser(username, password, email) #flash a success message
+			success = models.User.createUser(username, password, email)
+			if success == True:
+				pass #flash a success message
+			else:
+				pass #flash an error
 	else:
 		return render_template('login.html', registerForm=registerForm, loginForm=loginForm)
         
