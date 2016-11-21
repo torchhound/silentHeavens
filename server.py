@@ -1,24 +1,31 @@
 from flask import Flask, request, render_template, redirect, url_for, flash
-#from werkzeug.security import generate_password_hash, check_password_hash
-#from flask_wtf import Form 
-#from wtforms import TextField, TextAreaField, SubmitField, validators, ValidationError, PasswordField
-#from flask.ext.bcrypt import Bcrypt
-#import sqlite3
-#from flask.ext.mongoalchemy import MongoAlchemy
+from flask_wtf import Form 
+from wtforms import TextField, TextAreaField, SubmitField, validators, ValidationError, PasswordField
+from flask_bcrypt import Bcrypt
+from flask_login import LoginManager, UserMixin, login_required
 import models
 
-DEBUG = True
+DEBUG = True #change in production
 
 app = Flask(__name__)
 app.secret_key = "echidna"
 bcrypt = Bcrypt(app)
+loginManager = LoginManager()
+loginManager.init_app(app)
 
 class loginForm(Form):
 	username = TextField("Username",  [validators.Required("Please enter your username.")])
-	#email = TextField("Email", [validators.Required("Please enter your email address."), validators.Email("Please enter your email address.")])
+	password = PasswordField('Password', [validators.Required("Please enter a password.")])
+	login = SubmitField(label="Login")
+	
+	def __init__(self, *args, **kwargs):
+		Form.__init__(self, *args, **kwargs)
+
+class registerForm(Form):
+	username = TextField("Username",  [validators.Required("Please enter your username.")])
+	email = TextField("Email", [validators.Required("Please enter your email address."), validators.Email("Please enter your email address.")])
 	password = PasswordField('Password', [validators.Required("Please enter a password.")])
 	register = SubmitField(label="Register")
-	login = SubmitField(label="Login")
  
 	def __init__(self, *args, **kwargs):
 		Form.__init__(self, *args, **kwargs)
@@ -44,25 +51,26 @@ class loginForm(Form):
 	
 @app.route('/', methods=['POST', 'GET'])
 def login():
-	form = loginForm(csrf_enabled = False) #might need to be changed in production
-    if request.method=='POST': 
-    	if form.validate() == False:
-			return render_template("login.html", form=form)
-    	if form.login.data: #split into two forms? One with email and one without
-    		username = form.username.data
-        	password = bcrypt.generate_password_hash(form.password.data)
-            users = models.retrieveUsers()
-            if username in users and password in users:
-        		return render_template('index.html')
-        	else:
-        		return render_template("login.html", form=form)
-        elif form.register.data:   
-        	username = form.username.data
-        	password = bcrypt.generate_password_hash(form.password.data)
-        	email = form.email.data
-        	models.insertUser(username, password, email)
-    else:
-        return render_template('login.html', form=form)
+	loginForm = loginForm(csrf_enabled = False) #needs to be changed in production
+	registerForm = registerForm(csrf_enabled = False) #needs to be changed in production
+	if request.method=='POST': 
+		if registerForm.validate() == False:
+			return render_template("login.html", registerForm=registerForm, loginForm=loginForm)
+		if loginForm.login.data:
+			username = loginForm.username.data
+			password = bcrypt.generate_password_hash(loginForm.password.data)
+			users = models.retrieveUsers()
+			if username in users and password in users:
+				return render_template('index.html')
+			else:
+				return render_template("login.html", registerForm=registerForm, loginForm=loginForm)
+		elif registerForm.register.data:   
+			username = registerForm.username.data
+			password = bcrypt.generate_password_hash(registerForm.password.data)
+			email = registerForm.email.data
+			models.insertUser(username, password, email) #flash a success message
+	else:
+		return render_template('login.html', registerForm=registerForm, loginForm=loginForm)
         
 @app.route('/game', methods=["POST", "GET"])
 def index():
@@ -72,4 +80,4 @@ def index():
 		return render_template("index.html")
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0')

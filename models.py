@@ -1,29 +1,29 @@
 import sqlite3
 from flask import Flask
-from flask.ext.mongoalchemy import MongoAlchemy
+from flask_mongoalchemy import MongoAlchemy
 
 app = Flask(__name__)
 app.config['MONGOALCHEMY_DATABASE'] = 'repository'
 db = MongoAlchemy(app)
 
-class Empire(db.Document):
+class Player(db.Document):
 	username = db.StringField()
 	
-def addEmpire(username):
+def addPlayer(username):
 	try:
-		empire = Empire(username = username)
-		empire.save()
+		player = Player(username = username)
+		player.save()
 	except Exception as e:
 		print(e)
-		pass
+		pass #return False?
 	
-def removeEmpire(username):
+def removePlayer(username):
 	try:
-		rm = Empire.query.filter(Empire.username == username).first()
+		rm = Player.query.filter(Player.username == username).first()
 		rm.remove()
 	except Exception as e:
 		print(e)
-		pass
+		pass #return False?
 
 def insertUser(username, password, email):
 	conn = sqlite3.connect("users.db")

@@ -21,28 +21,24 @@
       <h1>Login</h1>
       	{% block content %}
 
-  {% for message in form.username.errors %}
+  {% for message in loginForm.username.errors %}
     <div class="flash">{{ message }}</div>
   {% endfor %}
    
-  {% for message in form.email.errors %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-   
-  {% for message in form.password.errors %}
+  {% for message in loginForm.password.errors %}
     <div class="flash">{{ message }}</div>
   {% endfor %}
    
   <form method="POST">
-    {{ form.hidden_tag() }}
+    {{ loginForm.hidden_tag() }}
 	<br>
-    {{ form.username.label }}
-    {{ form.username }}
+    {{ loginForm.username.label }}
+    {{ loginForm.username }}
     <br> 
-    {{ form.password.label }}
-    {{ form.password }}
+    {{ loginForm.password.label }}
+    {{ loginForm.password }}
     <br> 
-    {{ form.login }}
+    {{ loginForm.login }}
 	<br>
   </form>
      
@@ -52,31 +48,31 @@
       <h1>Register</h1>
       	{% block content %}
 
-  {% for message in form.username.errors %}
+  {% for message in registerForm.username.errors %}
     <div class="flash">{{ message }}</div>
   {% endfor %}
    
-  {% for message in form.email.errors %}
+  {% for message in registerForm.email.errors %}
     <div class="flash">{{ message }}</div>
   {% endfor %}
    
-  {% for message in form.password.errors %}
+  {% for message in registerForm.password.errors %}
     <div class="flash">{{ message }}</div>
   {% endfor %}
    
   <form method="POST">
-    {{ form.hidden_tag() }}
+    {{ registerForm.hidden_tag() }}
 	<br>
-    {{ form.username.label }}
-    {{ form.username }}
+    {{ registerForm.username.label }}
+    {{ registerForm.username }}
     <br>
-    {{ form.email.label }}
-    {{ form.email }}
+    {{ registerForm.email.label }}
+    {{ registerForm.email }}
     <br> 
-    {{ form.password.label }}
-    {{ form.password }}
+    {{ registerForm.password.label }}
+    {{ registerForm.password }}
     <br> 
-    {{ form.register }}
+    {{ registerForm.register }}
 	<br>
   </form>
      
