@@ -28,20 +28,23 @@ def login():
 	registerForm = forms.registerForm(csrf_enabled = False) #needs to be changed in production
 	if request.method == "POST": 
 		if loginForm.login.data:
+			print("Login POST", file=sys.stderr)
 			username = loginForm.username.data
-			password = bcrypt.generate_password_hash(loginForm.password.data)
+			password = loginForm.password.data
 			user = models.User.authUser(username, password)
 			if user == True:
 				print("Successful login of {}".format(username), file=sys.stderr)
 				login_user(username) #not sure about that argument
 				return render_template("index.html")
 			else:
+				print("Failed Login", file=sys.stderr)
 				error = "Failed Login"
 				return render_template("login.html", registerForm=registerForm, loginForm=loginForm, error=error)
 		elif registerForm.validate() == False: #potentially unnecessary
 			message = "Failure..."
 			return render_template("login.html", registerForm=registerForm, loginForm=loginForm, message=message)
 		elif registerForm.register.data:
+			print("Registration POST", file=sys.stderr)
 			message = ""   
 			username = registerForm.username.data
 			password = bcrypt.generate_password_hash(registerForm.password.data)
@@ -52,6 +55,7 @@ def login():
 				print("Successful registration of {}".format(username), file=sys.stderr)
 				return render_template("login.html", registerForm=registerForm, loginForm=loginForm, message=message) #flash a success message
 			else:
+				print("Registration Failed", file=sys.stderr)
 				message = "Failure..."
 				return render_template("login.html", registerForm=registerForm, loginForm=loginForm, message=message) #flash an error
 	else:
