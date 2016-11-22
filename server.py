@@ -3,6 +3,7 @@ from flask_wtf import Form
 from wtforms import TextField, TextAreaField, SubmitField, validators, ValidationError, PasswordField
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, login_required, login_user, logout_user
+import sys
 import models
 import forms
 
@@ -26,26 +27,33 @@ def login():
 	loginForm = forms.loginForm(csrf_enabled = False) #needs to be changed in production
 	registerForm = forms.registerForm(csrf_enabled = False) #needs to be changed in production
 	if request.method == "POST": 
-		if registerForm.validate() == False:
-			return render_template("login.html", registerForm=registerForm, loginForm=loginForm)
 		if loginForm.login.data:
 			username = loginForm.username.data
 			password = bcrypt.generate_password_hash(loginForm.password.data)
 			user = models.User.authUser(username, password)
 			if user == True:
+				print("Successful login of {}".format(username), file=sys.stderr)
 				login_user(username) #not sure about that argument
 				return render_template("index.html")
 			else:
-				return render_template("login.html", registerForm=registerForm, loginForm=loginForm)
-		elif registerForm.register.data:   
+				error = "Failed Login"
+				return render_template("login.html", registerForm=registerForm, loginForm=loginForm, error=error)
+		elif registerForm.validate() == False: #potentially unnecessary
+			message = "Failure..."
+			return render_template("login.html", registerForm=registerForm, loginForm=loginForm, message=message)
+		elif registerForm.register.data:
+			message = ""   
 			username = registerForm.username.data
 			password = bcrypt.generate_password_hash(registerForm.password.data)
 			email = registerForm.email.data
 			success = models.User.createUser(username, password, email)
 			if success == True:
-				return render_template("login.html", registerForm=registerForm, loginForm=loginForm) #flash a success message
+				message = "Success!"
+				print("Successful registration of {}".format(username), file=sys.stderr)
+				return render_template("login.html", registerForm=registerForm, loginForm=loginForm, message=message) #flash a success message
 			else:
-				return render_template("login.html", registerForm=registerForm, loginForm=loginForm) #flash an error
+				message = "Failure..."
+				return render_template("login.html", registerForm=registerForm, loginForm=loginForm, message=message) #flash an error
 	else:
 		return render_template("login.html", registerForm=registerForm, loginForm=loginForm)
         

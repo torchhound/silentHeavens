@@ -24,12 +24,13 @@ class User(UserMixin):
 	def authUser(username, password):
 		conn = sqlite3.connect("users.db")
 		cur = conn.cursor()
-		auth = cur.execute("SELECT {},{} FROM users".format(username, password))
-		conn.close()
-		if auth > 0:
+		values = [username, password]
+		auth = cur.execute("SELECT * FROM users WHERE username=? AND password=?", values)
+		if auth.fetchone():
 			return True
 		else:
 			return False
+		conn.close()
 		
 	def is_authenticated(self):
 		return True
