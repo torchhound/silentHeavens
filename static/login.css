@@ -15,3 +15,8 @@
 	height:500px;
 	border:2px solid #454343;
 }
+
+.submit {
+    width: 20em;  
+    height: 2em;
+}

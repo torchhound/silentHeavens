@@ -1,5 +1,6 @@
 from flask_wtf import Form 
 from wtforms import TextField, TextAreaField, SubmitField, validators, ValidationError, PasswordField
+import models
 
 class loginForm(Form):
 	username = TextField("Username",  [validators.Required("Please enter your username.")])

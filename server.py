@@ -43,9 +43,9 @@ def login():
 			email = registerForm.email.data
 			success = models.User.createUser(username, password, email)
 			if success == True:
-				pass #flash a success message
+				return render_template("login.html", registerForm=registerForm, loginForm=loginForm) #flash a success message
 			else:
-				pass #flash an error
+				return render_template("login.html", registerForm=registerForm, loginForm=loginForm) #flash an error
 	else:
 		return render_template("login.html", registerForm=registerForm, loginForm=loginForm)
         

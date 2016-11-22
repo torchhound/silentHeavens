@@ -65,7 +65,8 @@ def removePlayer(username):
 def insertUser(username, password, email):
 	conn = sqlite3.connect("users.db")
 	cur = conn.cursor()
-	cur.execute("INSERT INTO users (username, password, email) VALUES ({}, {}, {})".format(username, password, email))
+	values = [username, password, email]
+	cur.execute("INSERT INTO users (username, password, email) VALUES (?,?,?)", values)
 	conn.commit()
 	conn.close()
 
