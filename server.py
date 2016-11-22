@@ -4,6 +4,7 @@ from wtforms import TextField, TextAreaField, SubmitField, validators, Validatio
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, login_required, login_user, logout_user
 import models
+import forms
 
 DEBUG = True #change in production
 
@@ -15,49 +16,16 @@ loginManager.init_app(app)
 
 @loginManager.user_loader
 def load_user(username):
-	return models.getId(username)
-
-class loginForm(Form):
-	username = TextField("Username",  [validators.Required("Please enter your username.")])
-	password = PasswordField('Password', [validators.Required("Please enter a password.")])
-	login = SubmitField(label="Login")
-	
-	def __init__(self, *args, **kwargs):
-		Form.__init__(self, *args, **kwargs)
-
-class registerForm(Form):
-	username = TextField("Username",  [validators.Required("Please enter your username.")])
-	email = TextField("Email", [validators.Required("Please enter your email address."), validators.Email("Please enter your email address.")])
-	password = PasswordField('Password', [validators.Required("Please enter a password.")])
-	register = SubmitField(label="Register")
- 
-	def __init__(self, *args, **kwargs):
-		Form.__init__(self, *args, **kwargs)
- 
-	def validate(self):
-		users = models.retrieveUsers()
-		if not Form.validate(self):
-			return False
-	
-		nameCheck = str(self.username)
-		if nameCheck in users: #check if username has been used before
-			self.username.errors.append("That username is already taken")
-			return False
-		else:
-			return True
-			
-		emailCheck = self.email.lower() 
-		if emailCheck in users: #check if email has been used before
-			self.email.errors.append("That email is already taken")
-			return False
-		else:
-			return True	
+	try:
+		return models.getId(username)
+	except:
+		return None	
 	
 @app.route('/', methods=['POST', 'GET'])
 def login():
-	loginForm = loginForm(csrf_enabled = False) #needs to be changed in production
-	registerForm = registerForm(csrf_enabled = False) #needs to be changed in production
-	if request.method=='POST': 
+	loginForm = forms.loginForm(csrf_enabled = False) #needs to be changed in production
+	registerForm = forms.registerForm(csrf_enabled = False) #needs to be changed in production
+	if request.method == "POST": 
 		if registerForm.validate() == False:
 			return render_template("login.html", registerForm=registerForm, loginForm=loginForm)
 		if loginForm.login.data:
@@ -66,7 +34,7 @@ def login():
 			user = models.User.authUser(username, password)
 			if user == True:
 				login_user(username) #not sure about that argument
-				return render_template('index.html')
+				return render_template("index.html")
 			else:
 				return render_template("login.html", registerForm=registerForm, loginForm=loginForm)
 		elif registerForm.register.data:   
@@ -79,7 +47,7 @@ def login():
 			else:
 				pass #flash an error
 	else:
-		return render_template('login.html', registerForm=registerForm, loginForm=loginForm)
+		return render_template("login.html", registerForm=registerForm, loginForm=loginForm)
         
 @app.route('/game', methods=["POST", "GET"])
 def index():

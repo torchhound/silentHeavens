@@ -19,7 +19,7 @@
       {% endwith %}
       <div id="login">
       <h1>Login</h1>
-      	{% block content %}
+      	{% block login %}
 
   {% for message in loginForm.username.errors %}
     <div class="flash">{{ message }}</div>
@@ -46,7 +46,7 @@
       </div>
       <div id="register">
       <h1>Register</h1>
-      	{% block content %}
+      	{% block register %}
 
   {% for message in registerForm.username.errors %}
     <div class="flash">{{ message }}</div>
