@@ -18,7 +18,7 @@ loginManager.init_app(app)
 @loginManager.user_loader
 def load_user(username):
 	try:
-		return models.getId(username)
+		return models.User.get_id(username)
 	except:
 		return None	
 	
@@ -60,13 +60,6 @@ def login():
 				return render_template("login.html", registerForm=registerForm, loginForm=loginForm, message=message) #flash an error
 	else:
 		return render_template("login.html", registerForm=registerForm, loginForm=loginForm)
-        
-@app.route('/game', methods=["POST", "GET"])
-def index():
-	if request.method == "POST":
-		pass
-	else:
-		return render_template("index.html")
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

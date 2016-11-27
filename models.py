@@ -12,11 +12,13 @@ bcrypt = Bcrypt(app)
 
 class User(UserMixin):
 
+	id = 0
 	username = ""
 	email = ""
 	password = ""
 
 	def __init__(self, username, password, email):
+		self.id = get_id(username)
 		self.username =  username
 		self.password = password
 		self.email = email
@@ -59,8 +61,17 @@ class User(UserMixin):
 	def is_anonymous(self):
 		return False
  
-	def get_id(self):
-		return getId(username)
+	def get_id(self, username):
+		try:
+			conn = sqlite3.connect("users.db")
+			cur = conn.cursor()
+			cur.execute("SELECT id FROM users WHERE username == ?", username)
+			id = cur.fetchall()
+			conn.close()
+			return id
+		except Exception as e:
+			print(e)
+			return False
 
 class Player(db.Document):
 	username = db.StringField()
@@ -96,15 +107,3 @@ def retrieveUsers():
 	users = cur.fetchall()
 	conn.close()
 	return users
-	
-def getId(username):
-	try:
-		conn = sqlite3.connect("users.db")
-		cur = conn.cursor()
-		cur.execute("SELECT id FROM users WHERE username == {}".format(username))
-		id = cur.fetchall()
-		conn.close()
-		return id
-	except Exception as e:
-		print(e)
-		return False
