@@ -7,7 +7,8 @@
 		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
     <body>
-    <div id="wrap">
+    <div class="wrapper">
+            <div id="wrap">
     	{% with msgs = get_flashed_messages() %}
         {% if msgs %}
           {%- for msg in msgs %}
@@ -80,8 +81,10 @@
       </div>
 		
 	</div>
-	<footer>
-			<b>Made by <a href="https://github.com/torchhound">Joseph Cieslik</a>. Code available on <a href="https://github.com/torchhound/silentHeavens">Github</a></b>
-		</footer>
+            <div class="push"></div>
+        </div>
+        <div class="footer">
+            <b>Made by <a href="https://github.com/torchhound">Joseph Cieslik</a>. Code available on <a href="https://github.com/torchhound/silentHeavens">Github</a></b>
+        </div>
 </body>
 </html>
