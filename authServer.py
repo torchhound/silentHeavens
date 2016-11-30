@@ -24,7 +24,7 @@ def login():
 			user = models.authUser(username, password)
 			if user == True:
 				print("Successful login of {}".format(username), file=sys.stderr)
-				#send username and/or token to game server
+				return True
 			else:
 				print("Failed Login", file=sys.stderr)
 				error = "Failed Login"
