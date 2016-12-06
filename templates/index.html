@@ -13,18 +13,41 @@
 	</head>
 	<body>
 		<div class="container">
-            <div id="wrap">
-			<div id="map">
-				<h1>Map</h1>
+            <div id="row">
+				<div class = "col-md-6" id="map">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h1 class="titles">Map</h1>
+						</div>
+						<div class="panel-body">
+						</div>
+					</div>
+				</div>
+				<div col="col-md-6" id="graph">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h1 class="titles">Stats</h1>
+						</div>
+						<div class="panel-body">
+						</div>
+					</div>
+				</div>
 			</div>
-			<div id="graph">
-				<h1>Stats</h1>
-			</div>
-			<div id="cli">
-				{{ output }}
-				<form action="cli" method="POST">
-					>><input type="text" name="commands"><input type="submit" name="submitCLI" value="Enter">
-				</form>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="panel panel-default">
+								<div class="panel-body">
+									{{ output }}
+								</div>
+							</div>
+							<form id="cli" action="/cli" method="POST">
+								>><input type="text" id="commands" name="commands"><input type="submit" name="submitCLI" value="Enter">
+							</form>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
         <footer class="footer">

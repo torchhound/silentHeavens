@@ -54,6 +54,8 @@ def cli():
 	output = ""
 	if userInput == "stats":
 		output = "Test output"
+	else:
+		output = userInput
 	return render_template("index.html", output=output)
 
 if __name__ == '__main__':
