@@ -44,12 +44,17 @@ def register():
 		message = "Failure..."
 		return render_template("login.html")#, message=message) #flash an error
 
-@app.route('/game', methods=["POST", "GET"])
+@app.route("/game", methods=["GET"]) #check auth token
 def game():
-	if request.method == "POST":
-		pass
-	else:
-		return render_template("index.html")
+	return render_template("index.html")
+
+@app.route("/cli", methods=["POST"])
+def cli():
+	userInput = request.form["commands"]
+	output = ""
+	if userInput == "stats":
+		output = "Test output"
+	return render_template("index.html", output=output)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

@@ -5,10 +5,14 @@
 		<title>Silent Heavens</title>
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
 		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-		<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet"> 
+		<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    	<script src="{{ url_for('static', filename='index.js') }}"></script>
 	</head>
 	<body>
-		<div class="wrapper">
+		<div class="container">
             <div id="wrap">
 			<div id="map">
 				<h1>Map</h1>
@@ -17,18 +21,18 @@
 				<h1>Stats</h1>
 			</div>
 			<div id="cli">
-				<form method="POST">
+				{{ output }}
+				<form action="cli" method="POST">
 					>><input type="text" name="commands"><input type="submit" name="submitCLI" value="Enter">
 				</form>
 			</div>
 		</div>
-		<script type="text/javascript">
-			//convert GeoJSON to SVG or similar and output to map div
-		</script>
-            <div class="push"></div>
-        </div>
-        <div class="footer">
-            <b>Made by <a href="https://github.com/torchhound">Joseph Cieslik</a>. Code available on <a href="https://github.com/torchhound/silentHeavens">Github</a></b>
-        </div>
+        <footer class="footer">
+      		<div class="container">
+        		<div class="center">
+            		<b>Made by <a href="https://github.com/torchhound">Joseph Cieslik</a>. Code available on <a href="https://github.com/torchhound/silentHeavens">Github</a></b>
+        		</div>
+      		</div>
+    	</footer>
 	</body>
 </html>
