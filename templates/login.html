@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='login.js') }}"></script>
   </head>
   <body>
-    <div class="wrapper">
       <div class="container">
       <div class="row">
       <div class="col-md-6 col-md-offset-3">
@@ -72,11 +72,13 @@
         </div>
       </div>
     </div>
-  </div>
     </div>
-    <div class="push"></div>
-    <div class="footer">
-      <b>Made by <a href="https://github.com/torchhound">Joseph Cieslik</a>. Code available on <a href="https://github.com/torchhound/silentHeavens">Github</a></b>
-    </div>
+    <footer class="footer">
+      <div class="container">
+        <div class="center">
+            <b>Made by <a href="https://github.com/torchhound">Joseph Cieslik</a>. Code available on <a href="https://github.com/torchhound/silentHeavens">Github</a></b>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
