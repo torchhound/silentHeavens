@@ -1,91 +1,82 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <meta charset = "UTF-8">
 		<title>Silent Heavens</title>
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login.css') }}">
 		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-		<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet"> 
-</head>
-    <body>
+		<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
     <div class="wrapper">
-            <div id="wrap">
-    	{% with msgs = get_flashed_messages() %}
-        {% if msgs %}
-          {%- for msg in msgs %}
-            <div class="flashes">
-              {{ msg }}
+      <div class="container">
+      <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-login">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-6">
+                <a href="#" class="active" id="login-form-link">Login</a>
+              </div>
+              <div class="col-xs-6">
+                <a href="#" id="register-form-link">Register</a>
+              </div>
             </div>
-          {% endfor -%}
-        {% endif %}
-      {% endwith %}
-      <div id="login">
-      <h1>Login</h1>
-      	{% block login %}
-
-  {% for message in loginForm.username.errors %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-   
-  {% for message in loginForm.password.errors %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-   
-  <form method="POST">
-    {{ loginForm.hidden_tag() }}
-	<br>
-    {{ loginForm.username.label }}
-    {{ loginForm.username }}
-    <br> 
-    {{ loginForm.password.label }}
-    {{ loginForm.password }}
-    <br> 
-    {{ loginForm.login(class="submit") }}
-	<br>
-  </form>
-     
-{% endblock %}
-      </div>
-      <div id="register">
-      <h1>Register</h1>
-      	{% block register %}
-
-  {% for message in registerForm.username.errors %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-   
-  {% for message in registerForm.email.errors %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-   
-  {% for message in registerForm.password.errors %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-   
-  <form method="POST">
-    {{ registerForm.hidden_tag() }}
-	<br>
-    {{ registerForm.username.label }}
-    {{ registerForm.username }}
-    <br>
-    {{ registerForm.email.label }}
-    {{ registerForm.email }}
-    <br> 
-    {{ registerForm.password.label }}
-    {{ registerForm.password }}
-    <br> 
-    {{ registerForm.register(class="submit") }}
-	<br>
-  </form>
-     
-{% endblock %}
-      </div>
-		
-	</div>
-            <div class="push"></div>
+            <hr>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <form id="loginForm" action="/login" method="post" role="form" style="display: block;">
+                  <div class="form-group">
+                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+                  </div>
+                  <div class="form-group">
+                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-6 col-sm-offset-3">
+                        <input type="submit" name="login" id="login" tabindex="4" class="form-control btn btn-login" value="Login">
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <form id="registerForm" action="/register" method="post" role="form" style="display: none;">
+                  <div class="form-group">
+                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+                  </div>
+                  <div class="form-group">
+                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="">
+                  </div>
+                  <div class="form-group">
+                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                  </div>
+                  <div class="form-group">
+                    <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-6 col-sm-offset-3">
+                        <input type="submit" name="register" id="register" tabindex="4" class="form-control btn btn-register" value="Register">
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="footer">
-            <b>Made by <a href="https://github.com/torchhound">Joseph Cieslik</a>. Code available on <a href="https://github.com/torchhound/silentHeavens">Github</a></b>
-        </div>
-</body>
+      </div>
+    </div>
+  </div>
+    </div>
+    <div class="push"></div>
+    <div class="footer">
+      <b>Made by <a href="https://github.com/torchhound">Joseph Cieslik</a>. Code available on <a href="https://github.com/torchhound/silentHeavens">Github</a></b>
+    </div>
+  </body>
 </html>
