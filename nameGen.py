@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup, SoupStrainer
 flip = True
 
 def starName():
+	"""Returns a random star name"""
 	try:
 		r = requests.get("https://donjon.bin.sh/scifi/name/#type=space;space=Star")
 		response = r.content
@@ -17,6 +18,7 @@ def starName():
 		return False
 
 def planetName():
+	"""Returns a random planet name"""
 	global flip
 	try:
 		if flip == True:
@@ -39,6 +41,7 @@ def planetName():
 		return False
 
 def starSystemName():
+	"""Returns a random star system name"""
 	try:
 		r = requests.get("http://www.scifiideas.com/star-system-name-generator/")
 		response = r.content

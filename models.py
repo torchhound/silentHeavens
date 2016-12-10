@@ -10,9 +10,11 @@ db = MongoAlchemy(app)
 bcrypt = Bcrypt(app)
 
 class Player(db.Document):
+	"""MongoAlchemy Player class"""
 	username = db.StringField()
 	
 def addPlayer(username):
+	"""Adds a player object to MongoDB"""
 	try:
 		player = Player(username = username)
 		player.save()
@@ -21,6 +23,7 @@ def addPlayer(username):
 		pass #return False?
 	
 def removePlayer(username):
+	"""Removes a player object from MongoDB"""
 	try:
 		rm = Player.query.filter(Player.username == username).first()
 		rm.remove()
@@ -29,6 +32,7 @@ def removePlayer(username):
 		pass #return False?
 
 def insertUser(username, password, email):
+	"""Inserts a user into sqlite"""
 	print("create", file=sys.stderr)
 	conn = sqlite3.connect("users.db")
 	cur = conn.cursor()
@@ -38,6 +42,7 @@ def insertUser(username, password, email):
 	conn.close()
 
 def retrieveUsers():
+	"""Retrieves all users from sqlite"""
 	conn = sqlite3.connect("users.db")
 	cur = conn.cursor()
 	cur.execute("SELECT username, password, email FROM users")
@@ -46,6 +51,7 @@ def retrieveUsers():
 	return users
 
 def authUser(username, password):
+	"""Authenticates based on input compared to existence in sqlite"""
 	print("auth", file=sys.stderr)
 	conn = sqlite3.connect("users.db")
 	cur = conn.cursor()

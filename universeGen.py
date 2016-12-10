@@ -22,6 +22,7 @@ class Star(object):
 		return {'type': 'Feature', 'coordinates': (self.x, self.y, self.z), 'properties': ('name': self.name, 'type': self.starType)}
 '''
 class StarSystem(object): #metadata about planets, asteroids, comets, and stations
+	"""Defines a star system object and GeoJSON interface"""
 	def __init__(self, x, y, z, name, planets, asteroids, comets, stations, jumpGate):
 		self.x = x
 		self.y = y
@@ -50,6 +51,7 @@ class Planet(object):
 		return {'type': 'Feature', 'coordinates': (self.x, self.y, self.z), 'properties': ('name': self.name, 'moons': self.moons)}
 '''
 class Blackhole(object):
+	"""Defines a blackhole object and GeoJSON interface"""
 	def __init__(self, x, y, z, name):
 		self.x = x
 		self.y = y
@@ -84,6 +86,7 @@ class JumpGate(object):
 		return {'type': 'Feature', 'coordinates': (self.x, self.y, self.z), 'properties': ('name': self.name, 'output': self.output)}
 '''
 class AsteroidField(object):
+	"""Defines an asteroid field object and GeoJSON interface"""
 	def __init__(self, x, y, z, name):
 		self.x = x
 		self.y = y
@@ -95,6 +98,7 @@ class AsteroidField(object):
 		return {'type': 'Feature', 'coordinates': (self.x, self.y, self.z), 'properties': ('name': self.name)}
 
 def coordCheck(x, y, z):
+	"""Checks for coordinate collisions"""
 	global coordinates
 	tup = (x, y, z)
 	if tup in coordinates:
@@ -103,13 +107,15 @@ def coordCheck(x, y, z):
 		coordinates.append(tup)
 
 def nameCheck(name):
+	"""Checks for name collisions"""
 	global names
 	if name in names:
 		return False
 	else:
 		names.append(name)
 
-def addStarSystem(starSystem): #not sure about this
+def addStarSystem(starSystem):
+	"""Adds a star system to MongoDB"""
 	try:
 		starSystem.save()
 	except Exception as e:
@@ -117,7 +123,7 @@ def addStarSystem(starSystem): #not sure about this
 		pass #return False?
 
 def main(): #10k star systems
-
+	pass
 
 if __name__ == "__main__":
 	main()

@@ -9,12 +9,19 @@ app = Flask(__name__)
 app.secret_key = "echidna"
 bcrypt = Bcrypt(app)
 
+@app.errorhandler(404)
+def notFound(error):
+	"""HTTP 404 handler"""
+	return render_template("notFound.html"), 404
+
 @app.route("/", methods=["GET"])
 def default():
+	"""Returns login and register"""
 	return render_template("login.html")
 
 @app.route("/login", methods=["POST"])
 def login():
+	"""Handles login POST"""
 	print("Login POST", file=sys.stderr)
 	username = request.form["username"]
 	password = request.form["password"]
@@ -30,6 +37,7 @@ def login():
 
 @app.route("/register", methods=["POST"])
 def register():
+	"""Handles register POST"""
 	print("Registration POST", file=sys.stderr)
 	message = ""   
 	username = request.form["username"]
@@ -47,6 +55,7 @@ def register():
 
 @app.route("/game", methods=["GET"]) 
 def game():
+	"""Returns the game if a user is logged in"""
 	if "username" in session:
 		return render_template("index.html")
 	else:
@@ -54,6 +63,7 @@ def game():
 
 @app.route("/cli", methods=["POST"])
 def cli():
+	"""Handles command line POSTs"""
 	username = session["username"]
 	userInput = request.form["commands"]
 	output = ""
@@ -65,6 +75,7 @@ def cli():
 
 @app.route("/logout", methods=["POST"])
 def logout():
+	"""Logs the user out and returns them to login and register"""
 	session.pop("username", None)
 	return redirect(url_for("default")) 
 
