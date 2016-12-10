@@ -15,10 +15,7 @@
 	<body>
 		<div class="container">
             <div id="row">
-            	<div class="col-md-1">
-            		
-            	</div>
-				<div class = "col-md-5" id="map">
+				<div class = "col-md-6" id="map">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h1 class="titles">Map</h1>
@@ -27,7 +24,7 @@
 						</div>
 					</div>
 				</div>
-				<div col="col-md-5" id="graph">
+				<div col="col-md-6" id="graph">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h1 class="titles">Stats</h1>
@@ -35,11 +32,6 @@
 						<div class="panel-body">
 						</div>
 					</div>
-				</div>
-				<div class="col-md-1">
-					<form id="logout" action="/logout" method="POST">
-						<button type="submit" class="btn btn-danger">Logout</button>
-					</form>
 				</div>
 			</div>
 			<div class="row">
@@ -64,6 +56,11 @@
         		<div class="center">
             		<b>Made by <a href="https://github.com/torchhound">Joseph Cieslik</a>. Code available on <a href="https://github.com/torchhound/silentHeavens">Github</a></b>
         		</div>
+        		<div class="right">
+        			<form id="logout" action="/logout" method="POST">
+							<button type="submit" class="btn btn-danger">Logout</button>
+					</form>
+				</div>
       		</div>
     	</footer>
 	</body>

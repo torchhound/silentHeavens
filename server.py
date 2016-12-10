@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, redirect, url_for, flash, ses
 from flask_bcrypt import Bcrypt
 import sys
 import models
+import cli
 
 DEBUG = True #change in production
 
@@ -62,15 +63,11 @@ def game():
 		return redirect(url_for("default"))
 
 @app.route("/cli", methods=["POST"])
-def cli():
+def commandInterface():
 	"""Handles command line POSTs"""
 	username = session["username"]
 	userInput = request.form["commands"]
-	output = ""
-	if userInput == "stats":
-		output = "Test output"
-	else:
-		output = userInput
+	output = cli.cli(userInput, username)
 	return render_template("index.html", output=output)
 
 @app.route("/logout", methods=["POST"])
