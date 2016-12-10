@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset = "UTF-8">
+		<meta charset="utf-8">   
+		<meta name="viewport" content="width=device-width, initial-scale=1"> 
 		<title>Silent Heavens</title>
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
 		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
@@ -14,7 +15,10 @@
 	<body>
 		<div class="container">
             <div id="row">
-				<div class = "col-md-6" id="map">
+            	<div class="col-md-1">
+            		
+            	</div>
+				<div class = "col-md-5" id="map">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h1 class="titles">Map</h1>
@@ -23,7 +27,7 @@
 						</div>
 					</div>
 				</div>
-				<div col="col-md-6" id="graph">
+				<div col="col-md-5" id="graph">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h1 class="titles">Stats</h1>
@@ -31,6 +35,11 @@
 						<div class="panel-body">
 						</div>
 					</div>
+				</div>
+				<div class="col-md-1">
+					<form id="logout" action="/logout" method="POST">
+						<button type="submit" class="btn btn-danger">Logout</button>
+					</form>
 				</div>
 			</div>
 			<div class="row">

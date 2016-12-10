@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, flash
+from flask import Flask, request, render_template, redirect, url_for, flash, session
 from flask_bcrypt import Bcrypt
 import sys
 import models
@@ -21,6 +21,7 @@ def login():
 	user = models.authUser(username, password)
 	if user == True:
 		print("Successful login of {}".format(username), file=sys.stderr)
+		session["username"] = username
 		return redirect(url_for("game"))
 	else:
 		print("Failed Login", file=sys.stderr)
@@ -44,12 +45,16 @@ def register():
 		message = "Failure..."
 		return render_template("login.html")#, message=message) #flash an error
 
-@app.route("/game", methods=["GET"]) #check auth token
+@app.route("/game", methods=["GET"]) 
 def game():
-	return render_template("index.html")
+	if "username" in session:
+		return render_template("index.html")
+	else:
+		return redirect(url_for("default"))
 
 @app.route("/cli", methods=["POST"])
 def cli():
+	username = session["username"]
 	userInput = request.form["commands"]
 	output = ""
 	if userInput == "stats":
@@ -57,6 +62,11 @@ def cli():
 	else:
 		output = userInput
 	return render_template("index.html", output=output)
+
+@app.route("/logout", methods=["POST"])
+def logout():
+	session.pop("username", None)
+	return redirect(url_for("default")) 
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

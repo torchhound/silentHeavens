@@ -1,4 +1,4 @@
-$(function() {
+$(document).ready(function() {
 
     $('#login-form-link').click(function(e) {
 		$("#loginForm").delay(100).fadeIn(100);
